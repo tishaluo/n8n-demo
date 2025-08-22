@@ -11,3 +11,5 @@ pnpm-debug.log*
 .vscode/
 coverage/
 *.local
+node_modules
+node_modules
