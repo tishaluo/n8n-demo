@@ -139,6 +139,15 @@ const commentColumns = [
           duration = (new Date(item.stoppedAt).getTime() - new Date(item.startedAt).getTime()) / 1000;
         }
         const isSelected = item.id === selectedId;
+        // 格式化时间为 yy-mm-dd
+        let execDate = '';
+        if (item.startedAt) {
+          const d = new Date(item.startedAt);
+          const y = String(d.getFullYear()).slice(-2);
+          const m = String(d.getMonth() + 1).padStart(2, '0');
+          const day = String(d.getDate()).padStart(2, '0');
+          execDate = `${y}-${m}-${day}`;
+        }
         return (
           <List.Item
             style={{
@@ -152,17 +161,19 @@ const commentColumns = [
               padding: '14px 18px',
               fontWeight: isSelected ? 'bold' : 500,
               position: 'relative',
-              minHeight: 64,
+              minHeight: 74,
             }}
             onClick={() => setSelectedId(item.id)}
             onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 4px 16px #91d5ff55')}
             onMouseLeave={e => (e.currentTarget.style.boxShadow = isSelected ? '0 2px 8px #bae7ff55' : '0 1px 4px #eee')}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <div style={{ fontSize: 15, color: '#222', marginBottom: 2 }}>
-                <span style={{ fontWeight: 600 }}>编号：</span>{item.id}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                <span style={{ fontWeight: 600, fontSize: 16, color: '#222' }}>编号：</span>
+                <span style={{ fontWeight: 700, fontSize: 18, color: '#1890ff', letterSpacing: 1 }}>{item.id}</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ color: '#999', fontSize: 12, margin: '2px 0 4px 0' }}>执行时间：{execDate}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 2 }}>
                 <span style={{
                   color: item.finished ? '#52c41a' : '#f5222d',
                   fontWeight: 700,
